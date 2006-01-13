@@ -9,7 +9,7 @@ use URI::QueryParam qw//;
 use Carp qw//;
 use base qw/Class::Accessor/;
 
-our $VERSION = "0.1";
+our $VERSION = "0.2";
 
 __PACKAGE__->mk_accessors    qw/user_agent validator_uri/;
 __PACKAGE__->mk_ro_accessors qw/response request_uri som success/;
@@ -132,11 +132,11 @@ sub is_valid
     my $self = shift;
     my $som = $self->som;
     
-    # previous failure means the style sheet is invalid
+    # previous failure means the feed is invalid
     return 0 unless $self->success and defined $som;
 
     # fetch validity field in reponse
-    my $validity = $som->valueof("/Envelope/Body/cssvalidationresponse/validity");
+    my $validity = $som->valueof("/Envelope/Body/feedvalidationresponse/validity");
     
     # valid if m:validity is true
     return 1 if defined $validity and $validity eq "true";
@@ -232,7 +232,7 @@ Validator, C<http://validator.w3.org/feed/check.cgi> by default.
 
 Validate a feed takes C<%params> as defined below. Either C<string>
 or C<uri> must be supplied. Returns a true value if the validation succeeded
-(regardless of whether the style sheet contains errors).
+(regardless of whether the feed contains errors).
 
 =over 4
 
@@ -245,8 +245,7 @@ to the Validator, it might not work with overly long strings.
 
 =item uri => $feed_uri
 
-The location of a style sheet or a RSS/Atom feed containing or
-referencing style sheets.
+The location of an RSS/Atom feed
 
 =back
 
@@ -257,29 +256,28 @@ Same as the return value of C<validate()>.
 =item my $is_valid = $val->is_valid
 
 Returns a true value if the last attempt to C<validate()> succeeded and the
-validator reported no errors in the style sheet.
+validator reported no errors in the feed.
 
 =item my @errors = $val->errors
 
 Returns a list with information about the errors found for the
-style sheet. An error is a hash reference; the example in the
+feed. An error is a hash reference; the example in the
 synopsis would currently return something like
 
   ( {
-    context    => 'p',
-    property   => 'color',
-    expression => { start => '', end => 'not-a-color' }
-    errortype  => 'parse-error',
-    message    => 'not-a-color is not a color value',
-    line       => 0,
+          type -> 'MissingDescription',
+          line => '23',
+          column => '0',
+          text => 'Missing channel element: description',
+          element =>description,
+          parent =>channel,
   } )
 
 
 =item my @warnings = $val->warnings
 
 Returns a list with information about the warnings found for the
-style sheet. This is currently of limited use as it is broken, see
-L<http://www.w3.org/Bugs/Public/show_bug.cgi?id=771> for details.
+feed
 
 @@example
 
@@ -300,7 +298,7 @@ You can also supply a new object to replace the old one.
 =item my $uri = $val->validator_uri($validator_uri)
 
 Gets or sets the URI of the validator. If you did not specify a
-custom URI, C<http://jigsaw.w3.org/css-validator/validator> by
+custom URI, C<http://validator.w3.org/feed/check.cgi> by
 default.
 
 =item my $response = $val->response
