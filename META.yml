@@ -1,16 +1,15 @@
-# http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         WebService-Validator-Feed-W3C
-version:      0.2
+version:      0.3
 version_from: lib/WebService/Validator/Feed/W3C.pm
 installdirs:  site
 requires:
-    Carp:                          0
-    Class::Accessor:               0
     LWP::UserAgent:                0
     SOAP::Lite:                    0
+    Class::Accessor:               0
+    Carp:                          0
     URI:                           0
     URI::QueryParam:               0
 
 distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.17
+generated_by: ExtUtils::MakeMaker version 6.12

@@ -9,7 +9,7 @@ use URI::QueryParam qw//;
 use Carp qw//;
 use base qw/Class::Accessor/;
 
-our $VERSION = "0.2";
+our $VERSION = "0.3";
 
 __PACKAGE__->mk_accessors    qw/user_agent validator_uri/;
 __PACKAGE__->mk_ro_accessors qw/response request_uri som success/;
@@ -77,7 +77,7 @@ sub _handle_response
     # memorize the SOAP object model object
     $self->{'som'} = $som;
     
-    # check whether this is really the CSS Validator responding
+    # check whether this is really the Feed Validator responding
     if ($som->match("/Envelope/Body/feedvalidationresponse")) {
         $self->{'success'} = 1;
     }
@@ -198,7 +198,7 @@ WebService::Validator::Feed::W3C - Interface to the W3C Feed Validation service
   use WebService::Validator::Feed::W3C;
 
   my $feed_url = "http://www.example.com";
-  my $val = WebService::Validator::CSS::W3C->new;
+  my $val = WebService::Validator::Feed::W3C->new;
   my $ok = $val->validate(url => $feed_url);
 
   if ($ok and !$val->is_valid) {
