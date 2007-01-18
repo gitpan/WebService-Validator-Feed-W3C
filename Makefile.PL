@@ -7,7 +7,7 @@ WriteMakefile(
     VERSION_FROM      => 'lib/WebService/Validator/Feed/W3C.pm', # finds $VERSION
     PREREQ_PM         => {
 
-      SOAP::Lite => 0,
+      SOAP::Lite => 0.65,
       LWP::UserAgent => 0,
       URI => 0,
       URI::QueryParam => 0,

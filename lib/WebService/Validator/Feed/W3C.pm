@@ -2,14 +2,14 @@ package WebService::Validator::Feed::W3C;
 use strict;
 use warnings;
 
-use SOAP::Lite;
+use SOAP::Lite 0.65;
 use LWP::UserAgent qw//;
 use URI qw//;
 use URI::QueryParam qw//;
 use Carp qw//;
 use base qw/Class::Accessor/;
 
-our $VERSION = "0.3";
+our $VERSION = "0.4";
 
 __PACKAGE__->mk_accessors    qw/user_agent validator_uri/;
 __PACKAGE__->mk_ro_accessors qw/response request_uri som success/;
@@ -53,15 +53,6 @@ sub _handle_response
     
     local $_ = $res->content;
     
-
-    # workaround for SOAP::Lite's lack of support for SOAP 1.2
-    s{xmlns:env="http://www.w3.org/2003/05/soap-envelope"}
-     {xmlns:env="http://www.w3.org/2001/06/soap-envelope"};
-
-    # workaround for SOAP::Lite's lack of support for SOAP 1.2
-    s{env:encodingStyle="http://www.w3.org/2003/05/soap-encoding"}
-     {env:encodingStyle="http://www.w3.org/2001/06/soap-encoding"};
-
     my $som;
     eval { $som = SOAP::Deserializer->new->deserialize($_); };
 
@@ -199,7 +190,7 @@ WebService::Validator::Feed::W3C - Interface to the W3C Feed Validation service
 
   my $feed_url = "http://www.example.com";
   my $val = WebService::Validator::Feed::W3C->new;
-  my $ok = $val->validate(url => $feed_url);
+  my $ok = $val->validate(uri => $feed_url);
 
   if ($ok and !$val->is_valid) {
       print "Errors:\n";
