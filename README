@@ -1,4 +1,4 @@
-WebService-Validator-Feed-W3C version 0.1
+WebService-Validator-Feed-W3C version 0.5
 =========================================
 
 This module is an experimental interface to the W3C Feed Validation online
@@ -22,7 +22,7 @@ This module requires these other modules and libraries:
   Class::Accessor
   LWP::UserAgent
   URI::QueryParam
-  SOAP::Lite
+  SOAP::Lite v 0.65 and up
   URI
   Carp
 

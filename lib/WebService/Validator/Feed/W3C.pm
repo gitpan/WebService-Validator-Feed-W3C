@@ -9,7 +9,7 @@ use URI::QueryParam qw//;
 use Carp qw//;
 use base qw/Class::Accessor/;
 
-our $VERSION = "0.4";
+our $VERSION = "0.5";
 
 __PACKAGE__->mk_accessors    qw/user_agent validator_uri/;
 __PACKAGE__->mk_ro_accessors qw/response request_uri som success/;

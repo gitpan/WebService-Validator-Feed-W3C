@@ -1,5 +1,7 @@
 Revision history for Perl extension WebService::Validator::Feed::W3C.
 
+0.5 Fri Jan 19, 2006
+        - workaround for MacOSX tar adding resource files in the dist
 0.4 Thu Jan 18, 2006
         - removed workaround for old SOAP::Lite versions, 
         - requiring SOAP::Lite > 0.65
