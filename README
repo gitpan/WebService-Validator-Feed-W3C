@@ -1,7 +1,7 @@
-WebService-Validator-Feed-W3C version 0.5
+WebService-Validator-Feed-W3C version 0.6
 =========================================
 
-This module is an experimental interface to the W3C Feed Validation online
+This module is an interface to the W3C Feed Validation online
 service <http://validator.w3.org/feed/>, based on its experimental
 SOAP 1.2 support. It helps to find errors in RSS or ATOM feeds.
 
@@ -28,7 +28,8 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Written by olivier Thereaux <ot@w3.org> for W3C. 
+Written by olivier Thereaux <ot@w3.org> for W3C.
+Patches and tests by Stephen Rushe 
 Based on the WebService-Validator-CSS-W3C module
 (c) 2004 by Bjoern Hoehrmann <bjoern@hoehrmann.de>
 

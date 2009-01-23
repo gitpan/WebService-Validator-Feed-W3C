@@ -7,9 +7,10 @@ use LWP::UserAgent qw//;
 use URI qw//;
 use URI::QueryParam qw//;
 use Carp qw//;
+use HTTP::Request::Common;
 use base qw/Class::Accessor/;
 
-our $VERSION = "0.5";
+our $VERSION = "0.6";
 
 __PACKAGE__->mk_accessors    qw/user_agent validator_uri/;
 __PACKAGE__->mk_ro_accessors qw/response request_uri som success/;
@@ -90,26 +91,21 @@ sub validate
 
     $self->{'success'} = 0;
     
-    # 
+    my $req;
     if (defined $parm{string}) {
-        $uri->query_param( rawdata => $parm{string});
-        $uri->query_param( manual => 1);
+        $req = POST $uri, [ rawdata => $parm{string}, manual  => 1, output  => "soap12" ];
     } elsif (defined $parm{uri}) {
         $uri->query_param(url => $parm{uri});
+        $uri->query_param(output => "soap12");
+        $req = GET $uri;
     } else {
         Carp::croak "you must supply a string/uri parameter\n";
     }
 
-    
-    # request SOAP 1.2 output
-    $uri->query_param(output => "soap12");
-    
+        
     # memorize request uri
     $self->{'request_uri'} = $uri;
     
-    # generate new HTTP::Request object
-    my $req = HTTP::Request->new(GET => $uri);
-        
     my $res = $ua->simple_request($req);
     
     # memorize response
