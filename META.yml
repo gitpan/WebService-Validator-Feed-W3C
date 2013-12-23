@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                WebService-Validator-Feed-W3C
-version:             0.7
+version:             0.8
 abstract:            Interface to the W3C Feed Validation service
 license:             ~
 author:              
